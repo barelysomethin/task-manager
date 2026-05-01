@@ -29,6 +29,9 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           <Link href="/dashboard/tasks" className={`nav-item ${pathname.includes("/dashboard/tasks") ? "active" : ""}`}>
             ✓ Tasks
           </Link>
+          <Link href="/dashboard/team" className={`nav-item ${pathname.includes("/dashboard/team") ? "active" : ""}`}>
+            👥 Team
+          </Link>
         </nav>
 
         <div style={{ marginTop: "auto" }}>

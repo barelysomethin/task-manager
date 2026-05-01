@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Team Task Manager (Ethara Assignment)
 
-## Getting Started
+A high-performance, minimalist Team Task Manager built with **Next.js 15**, **MongoDB**, and **Paper Design Shaders**. This application allows teams to manage projects, track tasks, and collaborate with role-based access control.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Authentication**: Secure Signup/Login with JWT and Bcrypt encryption.
+- **Role-Based Access Control (RBAC)**:
+  - **Admin**: Create projects, create and assign tasks, view team members.
+  - **Member**: View assigned tasks and update task status.
+- **Project Management**: Create and organize projects with descriptions and owners.
+- **Task Tracking**:
+  - Task creation with due dates and project assignment.
+  - Real-time status updates (Pending, In Progress, Completed).
+  - Visual tracking of overdue tasks.
+- **Dashboard**: High-level overview of project stats and recent activities.
+- **Team Management**: View all team members and their roles.
+- **Aesthetics**: Brutalist "Paper Design" UI with interactive shaders for a premium feel.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Database**: [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) (Mongoose ODM)
+- **Styling**: Vanilla CSS with [Paper Design Shaders](https://paper-design.com/)
+- **Auth**: JWT (Jose) & BcryptJS
+- **Deployment**: [Railway](https://railway.app/)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js 18+
+- MongoDB Connection String
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/barelysomethin/task-manager.git
+   cd task-manager
+   ```
 
-## Deploy on Vercel
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. **Set up Environment Variables**:
+   Create a `.env.local` file in the root directory:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   JWT_SECRET=your_random_secret_key
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
+
+## 🌐 Deployment
+
+This app is optimized for deployment on **Railway**. 
+
+1. Connect your GitHub repository to Railway.
+2. Add your environment variables in the Railway dashboard.
+3. Deploy!
+
+## 📦 Submission Details
+
+- **Live URL**: [Pending Deployment]
+- **GitHub Repo**: [barelysomethin/task-manager](https://github.com/barelysomethin/task-manager.git)
+- **Demo Video**: [Link to 2-5 min demo]
+
+---
+Created for the Ethara Full-Stack Developer Assignment.

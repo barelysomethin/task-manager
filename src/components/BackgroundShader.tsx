@@ -31,12 +31,13 @@ export default function BackgroundShader() {
         type="gooey" 
         grid="hex" 
         inverted={false} 
-        size={0.5} 
+        size={0.63} 
         radius={1.25} 
         contrast={0.4} 
         grainMixer={0.2} 
         grainOverlay={0.2} 
         grainSize={0.5} 
+        scale={1}
         fit="cover" 
       />
     </div>

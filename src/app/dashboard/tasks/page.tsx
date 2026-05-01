@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function TasksPage() {
   const [tasks, setTasks] = useState([]);
   const [projects, setProjects] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   
@@ -13,18 +14,22 @@ export default function TasksPage() {
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [projectId, setProjectId] = useState("");
+  const [assigneeId, setAssigneeId] = useState("");
 
   const fetchData = async () => {
-    const [tasksRes, projectsRes] = await Promise.all([
+    const [tasksRes, projectsRes, usersRes] = await Promise.all([
       fetch("/api/tasks"),
-      fetch("/api/projects")
+      fetch("/api/projects"),
+      fetch("/api/users")
     ]);
     
     const tasksData = await tasksRes.json();
     const projectsData = await projectsRes.json();
+    const usersData = await usersRes.json();
     
     setTasks(tasksData);
     setProjects(projectsData);
+    setUsers(usersData);
     if (projectsData.length > 0) setProjectId(projectsData[0]._id);
     setLoading(false);
   };
@@ -38,7 +43,7 @@ export default function TasksPage() {
     const res = await fetch("/api/tasks", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, description, dueDate, projectId }),
+      body: JSON.stringify({ title, description, dueDate, projectId, assigneeId }),
     });
 
     if (res.ok) {
@@ -84,6 +89,7 @@ export default function TasksPage() {
               <tr style={{ borderBottom: "1px solid var(--surface-border)" }}>
                 <th style={{ padding: "1rem" }}>Task</th>
                 <th style={{ padding: "1rem" }}>Project</th>
+                <th style={{ padding: "1rem" }}>Assignee</th>
                 <th style={{ padding: "1rem" }}>Due Date</th>
                 <th style={{ padding: "1rem" }}>Status</th>
                 <th style={{ padding: "1rem" }}>Action</th>
@@ -97,6 +103,16 @@ export default function TasksPage() {
                     <div style={{ fontSize: "0.85rem", color: "var(--text-muted)" }}>{task.description}</div>
                   </td>
                   <td style={{ padding: "1rem" }}>{task.projectId?.name}</td>
+                  <td style={{ padding: "1rem" }}>
+                    {task.assigneeId ? (
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                        <span style={{ fontSize: "1.2rem" }}>👤</span>
+                        {task.assigneeId.name}
+                      </div>
+                    ) : (
+                      <span style={{ color: "var(--text-muted)" }}>Unassigned</span>
+                    )}
+                  </td>
                   <td style={{ padding: "1rem" }}>{new Date(task.dueDate).toLocaleDateString()}</td>
                   <td style={{ padding: "1rem" }}>
                     <span className={`badge badge-${task.status.toLowerCase().replace(" ", "-")}`}>
@@ -146,6 +162,15 @@ export default function TasksPage() {
               <div className="input-group">
                 <label>Due Date</label>
                 <input type="date" className="input-field" value={dueDate} onChange={e => setDueDate(e.target.value)} required />
+              </div>
+              <div className="input-group">
+                <label>Assign To</label>
+                <select className="input-field" value={assigneeId} onChange={e => setAssigneeId(e.target.value)}>
+                  <option value="">Select a member...</option>
+                  {users.map((u: any) => (
+                    <option key={u._id} value={u._id}>{u.name} ({u.role})</option>
+                  ))}
+                </select>
               </div>
               <div style={{ display: "flex", gap: "1rem", marginTop: "2rem" }}>
                 <button type="submit" className="btn btn-primary" style={{ flex: 1 }}>Create Task</button>
