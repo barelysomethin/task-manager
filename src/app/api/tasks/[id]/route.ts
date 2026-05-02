@@ -1,15 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Task from "@/models/Task";
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     await connectDB();
     const { status, assigneeId } = await req.json();
     const userId = req.headers.get("x-user-id");
     const role = req.headers.get("x-user-role");
 
-    const task = await Task.findById(params.id);
+    const task = await Task.findById(id);
     if (!task) {
       return NextResponse.json({ error: "Task not found" }, { status: 404 });
     }
@@ -33,15 +34,16 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
     const role = req.headers.get("x-user-role");
     if (role !== "Admin") {
       return NextResponse.json({ error: "Only Admins can delete tasks" }, { status: 403 });
     }
 
     await connectDB();
-    const task = await Task.findByIdAndDelete(params.id);
+    const task = await Task.findByIdAndDelete(id);
     if (!task) {
       return NextResponse.json({ error: "Task not found" }, { status: 404 });
     }
